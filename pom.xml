@@ -43,6 +43,8 @@
     <redis.spring.version>1.7.2.RELEASE</redis.spring.version>
     <!-- jackson -->
     <jackson.version>2.9.3</jackson.version>
+    <!-- quartz -->
+    <quartz.varsion>2.3.2</quartz.varsion>
 
     <tomcat-jsp-api.version>8.0.47</tomcat-jsp-api.version>
   </properties>
@@ -304,6 +306,20 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.41</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.varsion}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz-jobs</artifactId>
+      <version>${quartz.varsion}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
