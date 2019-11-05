@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ScheduleTask {
-
     private String id;
 
     private String name;
@@ -16,6 +15,8 @@ public class ScheduleTask {
     private String expression;
 
     private Integer state;
+
+    private Integer type;
 
     private String param;
 }
