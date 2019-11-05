@@ -1,15 +1,13 @@
 package com.activity.quartz.bean;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 任务信息
  */
-@Setter
-@Getter
+@Data
 public class ScheduleTask implements Serializable {
 
 
@@ -44,8 +42,12 @@ public class ScheduleTask implements Serializable {
     private Object[] param;
 
     /**
+     * 任务类型
+     */
+    private String type;
+
+    /**
      * 任务状态
      */
-
     private int state;
 }
