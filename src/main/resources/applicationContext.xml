@@ -5,4 +5,6 @@
 
     <!--整合mybatis框架-->
     <import resource="applicationContext-mybatis.xml"></import>
+    <import resource="applicationContext-quartz.xml"></import>
+
 </beans>
