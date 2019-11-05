@@ -42,4 +42,10 @@ public class ScheduleTask implements Serializable {
      * 执行任务方法的参数
      */
     private Object[] param;
+
+    /**
+     * 任务状态
+     */
+
+    private int state;
 }
