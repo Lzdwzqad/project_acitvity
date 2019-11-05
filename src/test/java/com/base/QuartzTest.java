@@ -24,7 +24,7 @@ public class QuartzTest {
         ScheduleTask task = new ScheduleTask();
         task.setExpression("0/5 * * * * ?");
         task.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
-        task.setGroup("com.activity.quartz.test.MyJob");
+        task.setGroup("com.base.MyJob");
         task.setTrigger("findUserName");
         task.setName("task1");
         task.setParam(new Object[]{"刘婷", 19});
