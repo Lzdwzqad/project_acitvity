@@ -1,4 +1,4 @@
-package com.activity.quartz.test;
+package com.base;
 
 import com.activity.quartz.bean.ScheduleTask;
 import com.activity.quartz.service.TaskService;
