@@ -3,9 +3,6 @@ package com.activity.mapper;
 import com.activity.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
-
 @Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userno);
