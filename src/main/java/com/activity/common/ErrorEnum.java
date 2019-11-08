@@ -1,5 +1,8 @@
 package com.activity.common;
 
+/**
+ * 公共错误码枚举类
+ */
 public enum ErrorEnum {
 
     S200("200", "成功"),
@@ -8,7 +11,14 @@ public enum ErrorEnum {
     E500("500", "系统错误");
 
 
+    /**
+     * 错误代码
+     */
     private String code;
+
+    /**
+     * 错误描述
+     */
     private String desc;
 
     public String getCode() {

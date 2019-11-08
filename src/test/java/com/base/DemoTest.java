@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.List;
 
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -45,9 +46,9 @@ public class DemoTest {
 
     @Test
     public void handleTest() {
-        JsonData json = gatewayController.geteway("alifenga.xyz.test", null, null);
-        JsonData json1 = gatewayController.geteway("alifenga.xyz.test", "test", null);
-        JsonData json2 = gatewayController.geteway("alifenga.xyz.test", "test2", "刘婷");
+        JsonData json = gatewayController.geteway(null, "alifenga.xyz.test", null, null);
+        JsonData json1 = gatewayController.geteway(null, "alifenga.xyz.test", "test", null);
+        JsonData json2 = gatewayController.geteway(null, "alifenga.xyz.test", "test2", "刘婷");
         System.out.println(json);
         System.out.println(json1);
         System.out.println(json2);

@@ -10,7 +10,7 @@ public class TestHandle extends AbstractHandle {
 
     @Override
     public JsonData handle(String requestJSON) {
-        return new JsonData(requestJSON);
+        return new JsonData(requestJSON+request);
     }
 
     @GetwayMapping(name = "test")

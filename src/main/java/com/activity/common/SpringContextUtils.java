@@ -32,11 +32,25 @@ public class SpringContextUtils implements ApplicationContextAware {
         return applicationContext;
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * 根据beanId获取Bean
+     *
+     * @param beanId
+     * @param <T>
+     * @return
+     */
     public static <T> T getBean(String beanId) {
-        return (T) applicationContext.getBean(beanId);
+        T bean = (T) applicationContext.getBean(beanId);
+        return bean;
     }
 
+    /**
+     * 根据类获取Bean
+     *
+     * @param requiredType
+     * @param <T>
+     * @return
+     */
     public static <T> T getBean(Class<T> requiredType) {
         return (T) applicationContext.getBean(requiredType);
     }
