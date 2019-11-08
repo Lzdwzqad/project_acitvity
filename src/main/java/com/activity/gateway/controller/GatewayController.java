@@ -4,7 +4,7 @@ import com.activity.common.ErrorEnum;
 import com.activity.common.JsonData;
 import com.activity.common.SpringContextUtils;
 import com.activity.gateway.AbstractHandle;
-import com.activity.gateway.annotation.GetwayMapping;
+import com.activity.gateway.annotation.GetewayMapping;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 /**
- * 自定义请求网路由
+ * 自定义请求网关路由
  */
 @RestController
 public class GatewayController {
@@ -44,10 +44,10 @@ public class GatewayController {
                 boolean isAnn = false;
                 for (Method method : methods) {
                     //判断方法是存在映射注解标注
-                    if (method.isAnnotationPresent(GetwayMapping.class)) {
+                    if (method.isAnnotationPresent(GetewayMapping.class)) {
                         isAnn = true;
                         //获取注解对象
-                        GetwayMapping getwayMapping = method.getAnnotation(GetwayMapping.class);
+                        GetewayMapping getwayMapping = method.getAnnotation(GetewayMapping.class);
                         //校验映射名是否与请求方法名一致
                         if (getwayMapping.name().equals(methodName)) {
                             //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
