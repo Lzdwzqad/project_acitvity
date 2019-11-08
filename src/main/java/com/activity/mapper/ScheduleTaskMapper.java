@@ -1,7 +1,12 @@
 package com.activity.mapper;
 
 import com.activity.model.ScheduleTask;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+
+@Repository
 public interface ScheduleTaskMapper {
     int deleteByPrimaryKey(String id);
 
@@ -16,4 +21,6 @@ public interface ScheduleTaskMapper {
     int updateByPrimaryKeyWithBLOBs(ScheduleTask record);
 
     int updateByPrimaryKey(ScheduleTask record);
+
+    List<ScheduleTask> list();
 }

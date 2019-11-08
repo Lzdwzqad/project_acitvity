@@ -5,6 +5,7 @@ import com.activity.gateway.controller.GatewayController;
 import com.activity.quartz.bean.ScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
+import com.activity.service.ScheduleTaskService;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ public class DemoTest {
 
     @Autowired
     private GatewayController gatewayController;
+    @Autowired
+    private ScheduleTaskService scheduleTaskService;
 
     @Test
     public void addTask() throws InterruptedException {
@@ -53,4 +56,18 @@ public class DemoTest {
         System.out.println(json1);
         System.out.println(json2);
     }
+
+
+    @Test
+    public void handleTest1() {
+        JsonData json = gatewayController.gateway(null, "alifenga.xyz.test", null, null);
+        JsonData json1 = gatewayController.gateway(null, null, "list", null);
+        JsonData json2 = gatewayController.gateway(null, "alifenga.xyz.test", "test2", "刘婷");
+        System.out.println(json);
+        System.out.println(json1);
+        System.out.println(json2);
+    }
+
+
+
 }

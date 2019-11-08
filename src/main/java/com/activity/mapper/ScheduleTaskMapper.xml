@@ -153,4 +153,10 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="list"  resultType="com.activity.model.ScheduleTask">
+    select * from scheduletask
+  </select>
+
 </mapper>
