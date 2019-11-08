@@ -2,22 +2,26 @@ package com.activity.gateway.controller;
 
 import com.activity.common.ErrorEnum;
 import com.activity.common.JsonData;
-import com.activity.common.SpringContextUtils;
 import com.activity.gateway.AbstractHandle;
-import com.activity.gateway.annotation.GetewayMapping;
+import com.activity.gateway.annotation.GatewayMapping;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 /**
  * 自定义请求网关路由
  */
 @RestController
 public class GatewayController {
+
+    @Autowired
+    Map<String, AbstractHandle> abstractHandleMap;
 
     /**
      * 入口请求
@@ -28,55 +32,46 @@ public class GatewayController {
      * @param requestJson
      * @return
      */
-    @PostMapping("/geteway")
-    public JsonData geteway(HttpServletRequest request, String beanName, String methodName, String requestJson) {
-        JsonData json = new JsonData();
+    @PostMapping("/gateway")
+    public JsonData gateway(HttpServletRequest request, String beanName, String methodName, String requestJson) {
+        JsonData json = new JsonData(ErrorEnum.E404.getCode(), ErrorEnum.E404.getDesc(), null);
         try {
             //根据参数获取容器中handle实现Bean
-            AbstractHandle handle = SpringContextUtils.getBean(beanName);
+            AbstractHandle handle = abstractHandleMap.get(beanName);
+            if (handle == null) {
+                return json;
+            }
             handle.request = request;
             //方法为空,默认为handle方法
             if (StringUtils.isEmpty(methodName)) {
-                json = handle.handle(requestJson);
-            } else {
-                //获取bean自定义方法
-                Method[] methods = handle.getClass().getDeclaredMethods();
-                boolean isAnn = false;
-                for (Method method : methods) {
-                    //判断方法是存在映射注解标注
-                    if (method.isAnnotationPresent(GetewayMapping.class)) {
-                        //获取注解对象
-                        GetewayMapping getwayMapping = method.getAnnotation(GetewayMapping.class);
-                        //校验映射名是否与请求方法名一致
-                        if (getwayMapping.name().equals(methodName)) {
-                            isAnn = true;
-                            //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
-                            Type[] paramTypeList = method.getGenericParameterTypes();
-                            if (paramTypeList.length == 0) {
-                                json = (JsonData) method.invoke(handle);
-                                break;
-                            } else if (paramTypeList.length == 1) {
-                                json = (JsonData) method.invoke(handle, requestJson);
-                                break;
-                            } else {
-                                //参数大于1,暂定为请求非法 TODO
-                                json = new JsonData(ErrorEnum.E410.getCode(), ErrorEnum.E410.getDesc(), null);
-                                break;
-                            }
+                return handle.handle(requestJson);
+            }
+            //获取bean自定义方法
+            Method[] methods = handle.getClass().getDeclaredMethods();
+            for (Method method : methods) {
+                //判断方法是存在映射注解标注
+                if (method.isAnnotationPresent(GatewayMapping.class)) {
+                    //获取注解对象
+                    GatewayMapping getwayMapping = method.getAnnotation(GatewayMapping.class);
+                    //校验映射名是否与请求方法名一致
+                    if (getwayMapping.name().equals(methodName)) {
+                        //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
+                        Type[] paramTypeList = method.getGenericParameterTypes();
+                        if (paramTypeList.length == 0) {
+                            return (JsonData) method.invoke(handle);
+                        } else if (paramTypeList.length == 1) {
+                            return (JsonData) method.invoke(handle, requestJson);
+                        } else {
+                            //参数大于1,暂定为请求非法 TODO
+                            return new JsonData(ErrorEnum.E410.getCode(), ErrorEnum.E410.getDesc(), null);
                         }
                     }
-                }
-
-                //不存在映射注解,请求非法不存在,返回结束
-                if (!isAnn) {
-                    json = new JsonData(ErrorEnum.E404.getCode(), ErrorEnum.E404.getDesc(), null);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             json = new JsonData(ErrorEnum.E500.getCode(), ErrorEnum.E500.getDesc(), null);
-        } finally {
-            return json;
         }
+        return json;
     }
 }

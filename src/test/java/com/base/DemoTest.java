@@ -46,9 +46,9 @@ public class DemoTest {
 
     @Test
     public void handleTest() {
-        JsonData json = gatewayController.geteway(null, "alifenga.xyz.test", null, null);
-        JsonData json1 = gatewayController.geteway(null, "alifenga.xyz.test", "test", null);
-        JsonData json2 = gatewayController.geteway(null, "alifenga.xyz.test", "test2", "刘婷");
+        JsonData json = gatewayController.gateway(null, "alifenga.xyz.test", null, null);
+        JsonData json1 = gatewayController.gateway(null, "alifenga.xyz.test", "test", null);
+        JsonData json2 = gatewayController.gateway(null, "alifenga.xyz.test", "test2", "刘婷");
         System.out.println(json);
         System.out.println(json1);
         System.out.println(json2);
