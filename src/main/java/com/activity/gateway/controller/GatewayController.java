@@ -45,11 +45,11 @@ public class GatewayController {
                 for (Method method : methods) {
                     //判断方法是存在映射注解标注
                     if (method.isAnnotationPresent(GetewayMapping.class)) {
-                        isAnn = true;
                         //获取注解对象
                         GetewayMapping getwayMapping = method.getAnnotation(GetewayMapping.class);
                         //校验映射名是否与请求方法名一致
                         if (getwayMapping.name().equals(methodName)) {
+                            isAnn = true;
                             //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
                             Type[] paramTypeList = method.getGenericParameterTypes();
                             if (paramTypeList.length == 0) {

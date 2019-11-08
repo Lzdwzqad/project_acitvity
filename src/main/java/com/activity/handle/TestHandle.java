@@ -5,6 +5,8 @@ import com.activity.gateway.AbstractHandle;
 import com.activity.gateway.annotation.GetewayMapping;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Component("alifenga.xyz.test")
 public class TestHandle extends AbstractHandle {
 
@@ -20,6 +22,7 @@ public class TestHandle extends AbstractHandle {
 
     @GetewayMapping(name = "test2")
     public JsonData test2(String requestJSON) {
-        return new JsonData(requestJSON);
+        HttpServletRequest request = super.request;
+        return new JsonData("请求IP:"+request.getRemoteAddr()+requestJSON);
     }
 }
