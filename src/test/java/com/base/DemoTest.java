@@ -1,9 +1,11 @@
 package com.base;
 
+import com.activity.gateway.GatewayController;
 import com.activity.quartz.bean.ScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-@ContextConfiguration(locations = {"classpath:applicationContext-quartz.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class QuartzTest {
+public class DemoTest {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private GatewayController gatewayController;
 
     @Test
     public void addTask() throws InterruptedException {
@@ -36,5 +41,13 @@ public class QuartzTest {
         System.out.println("重启定时任务");
         task.setExpression("0/10 * * * * ?");
         taskService.reStartTask(task);
+    }
+
+    @Test
+    public void handleTest() {
+        JSONObject json = gatewayController.geteway("alifenga.xyz", null);
+        JSONObject json1 = gatewayController.geteway("alifenga.xyz.test", null);
+        System.out.println(json);
+        System.out.println(json1);
     }
 }
