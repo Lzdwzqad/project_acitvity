@@ -1,11 +1,11 @@
 package com.base;
 
-import com.activity.gateway.GatewayController;
+import com.activity.common.JsonData;
+import com.activity.gateway.controller.GatewayController;
 import com.activity.quartz.bean.ScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +45,11 @@ public class DemoTest {
 
     @Test
     public void handleTest() {
-        JSONObject json = gatewayController.geteway("alifenga.xyz", null);
-        JSONObject json1 = gatewayController.geteway("alifenga.xyz.test", null);
+        JsonData json = gatewayController.geteway("alifenga.xyz.test", null, null);
+        JsonData json1 = gatewayController.geteway("alifenga.xyz.test", "test", null);
+        JsonData json2 = gatewayController.geteway("alifenga.xyz.test", "test2", "刘婷");
         System.out.println(json);
         System.out.println(json1);
+        System.out.println(json2);
     }
 }
