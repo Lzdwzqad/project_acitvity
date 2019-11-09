@@ -1,6 +1,6 @@
 package com.activity.quartz.service;
 
-import com.activity.quartz.bean.ScheduleTask;
+import com.activity.quartz.bean.QuartzScheduleTask;
 import com.activity.quartz.manager.JobProxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ public class TaskServiceImpl implements TaskService {
 
     private static final Logger logger = LogManager.getLogger(TaskServiceImpl.class);
 
-    private ConcurrentHashMap<String, ScheduleTask> allTask = new ConcurrentHashMap<String, ScheduleTask>();
+    private ConcurrentHashMap<String, QuartzScheduleTask> allTask = new ConcurrentHashMap<String, QuartzScheduleTask>();
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
@@ -33,8 +33,8 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public List<ScheduleTask> getAllTask() {
-        List<ScheduleTask> list = new ArrayList();
+    public List<QuartzScheduleTask> getAllTask() {
+        List<QuartzScheduleTask> list = new ArrayList();
         list.addAll(allTask.values());
         return list;
     }
@@ -66,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public ScheduleTask addTask(ScheduleTask task) {
+    public QuartzScheduleTask addTask(QuartzScheduleTask task) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             JobDetail jobDetail = JobBuilder.newJob(JobProxy.class)
@@ -111,7 +111,7 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public ScheduleTask reStartTask(ScheduleTask task) {
+    public QuartzScheduleTask reStartTask(QuartzScheduleTask task) {
         try {
             CronTrigger cronTrigger = (CronTrigger) getTrigger(task.getTrigger(), task.getGroup());
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
@@ -136,7 +136,7 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public ScheduleTask deleteTask(ScheduleTask task) {
+    public QuartzScheduleTask deleteTask(QuartzScheduleTask task) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             JobKey jobKey = new JobKey(task.getName(), task.getGroup());
@@ -154,7 +154,7 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public ScheduleTask pauseTask(ScheduleTask task) {
+    public QuartzScheduleTask pauseTask(QuartzScheduleTask task) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             JobKey jobKey = new JobKey(task.getName(), task.getGroup());
@@ -172,7 +172,7 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public ScheduleTask resumeTask(ScheduleTask task) {
+    public QuartzScheduleTask resumeTask(QuartzScheduleTask task) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             JobKey jobKey = new JobKey(task.getName(), task.getGroup());
@@ -187,12 +187,12 @@ public class TaskServiceImpl implements TaskService {
      * 批量删除定时任务
      */
     @Override
-    public void deleteTasks(List<ScheduleTask> scheduleTasks) {
+    public void deleteTasks(List<QuartzScheduleTask> scheduleTasks) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             List<JobKey> jobKeys = new ArrayList<JobKey>();
             JobKey jobKey;
-            for (ScheduleTask scheduleTask : scheduleTasks) {
+            for (QuartzScheduleTask scheduleTask : scheduleTasks) {
                 jobKey = new JobKey(scheduleTask.getName(), scheduleTask.getGroup());
                 jobKeys.add(jobKey);
             }

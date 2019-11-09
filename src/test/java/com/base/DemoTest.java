@@ -2,7 +2,7 @@ package com.base;
 
 import com.activity.common.JsonData;
 import com.activity.gateway.controller.GatewayController;
-import com.activity.quartz.bean.ScheduleTask;
+import com.activity.quartz.bean.QuartzScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
 import com.activity.service.ScheduleTaskService;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.List;
 
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -30,7 +29,7 @@ public class DemoTest {
 
     @Test
     public void addTask() throws InterruptedException {
-        ScheduleTask task = new ScheduleTask();
+        QuartzScheduleTask task = new QuartzScheduleTask();
         task.setExpression("0/5 * * * * ?");
         task.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
         task.setGroup("com.base.MyJob");
@@ -38,7 +37,7 @@ public class DemoTest {
         task.setName("task1");
         task.setParam(new Object[]{"刘婷", 19});
         taskService.addTask(task);
-        List<ScheduleTask> list = taskService.getAllTask();
+        List<QuartzScheduleTask> list = taskService.getAllTask();
         System.out.println(JSON.toJSONString(list));
 
         Thread.sleep(1000 * 20);

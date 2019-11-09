@@ -1,6 +1,6 @@
 package com.activity.quartz.service;
 
-import com.activity.quartz.bean.ScheduleTask;
+import com.activity.quartz.bean.QuartzScheduleTask;
 import org.quartz.Trigger;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface TaskService {
      *
      * @return
      */
-    List<ScheduleTask> getAllTask();
+    List<QuartzScheduleTask> getAllTask();
 
     /**
      * 获取触发器
@@ -32,7 +32,7 @@ public interface TaskService {
      * @param task
      * @return
      */
-    ScheduleTask addTask(ScheduleTask task);
+    QuartzScheduleTask addTask(QuartzScheduleTask task);
 
     /**
      * 重启定时任务
@@ -40,7 +40,7 @@ public interface TaskService {
      * @param task
      * @return
      */
-    ScheduleTask reStartTask(ScheduleTask task);
+    QuartzScheduleTask reStartTask(QuartzScheduleTask task);
 
     /**
      * 删除指定定时任务
@@ -48,7 +48,7 @@ public interface TaskService {
      * @param task
      * @return
      */
-    ScheduleTask deleteTask(ScheduleTask task);
+    QuartzScheduleTask deleteTask(QuartzScheduleTask task);
 
     /**
      * 暂停任务
@@ -56,7 +56,7 @@ public interface TaskService {
      * @param task
      * @return
      */
-    ScheduleTask pauseTask(ScheduleTask task);
+    QuartzScheduleTask pauseTask(QuartzScheduleTask task);
 
     /**
      * 恢复任务
@@ -64,12 +64,12 @@ public interface TaskService {
      * @param task
      * @return
      */
-    ScheduleTask resumeTask(ScheduleTask task);
+    QuartzScheduleTask resumeTask(QuartzScheduleTask task);
 
     /**
      * 批量删除定时任务
      */
-    void deleteTasks(List<ScheduleTask> scheduleTasks);
+    void deleteTasks(List<QuartzScheduleTask> scheduleTasks);
 
     /**
      * 暂停所有的定时任务

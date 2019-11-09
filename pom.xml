@@ -296,6 +296,12 @@
       <version>${quartz.varsion}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.xiaoleilu</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>

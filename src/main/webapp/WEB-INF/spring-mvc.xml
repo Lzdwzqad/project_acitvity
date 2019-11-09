@@ -15,6 +15,7 @@
     <!--@NumberFormatannotation支持，@DateTimeFormat支持，@Valid支持，读写XML的支持（JAXB），读写JSON的支持（Jackson）-->
     <mvc:annotation-driven></mvc:annotation-driven>
 
+    <mvc:resources location="/js/" mapping="/js/**"/>
     <!--3) ViewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- viewClass需要在pom中引入两个包：standard.jar and jstl.jar -->

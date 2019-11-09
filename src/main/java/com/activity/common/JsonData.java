@@ -2,6 +2,9 @@ package com.activity.common;
 
 import lombok.Data;
 
+/**
+ * 响应对象
+ */
 @Data
 public class JsonData {
 

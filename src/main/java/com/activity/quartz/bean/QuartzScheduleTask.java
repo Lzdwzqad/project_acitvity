@@ -8,8 +8,7 @@ import java.io.Serializable;
  * 任务信息
  */
 @Data
-public class ScheduleTask implements Serializable {
-
+public class QuartzScheduleTask implements Serializable {
 
     /**
      * 任务Id

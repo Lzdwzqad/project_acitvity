@@ -1,6 +1,6 @@
 package com.activity.quartz.manager;
 
-import com.activity.quartz.bean.ScheduleTask;
+import com.activity.quartz.bean.QuartzScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
 import org.springframework.context.ApplicationContext;
@@ -37,7 +37,7 @@ public class ManagerJob implements ApplicationListener<ContextRefreshedEvent> {
             for (Method method : methods) {
                 if (method.isAnnotationPresent(Scheduled.class)) {
                     Scheduled annotation = method.getAnnotation(Scheduled.class);
-                    ScheduleTask scheduleTask = new ScheduleTask();
+                    QuartzScheduleTask scheduleTask = new QuartzScheduleTask();
                     scheduleTask.setGroup(class1.getName());
                     scheduleTask.setTrigger(method.getName());
                     scheduleTask.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));

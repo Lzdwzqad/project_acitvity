@@ -2,8 +2,10 @@ package com.activity.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ScheduleTask {
+public class ScheduleTask implements Serializable {
     private String id;
 
     private String name;

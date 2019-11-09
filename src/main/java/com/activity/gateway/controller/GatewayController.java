@@ -1,9 +1,11 @@
 package com.activity.gateway.controller;
 
+import com.activity.common.AesUtil;
 import com.activity.common.ErrorEnum;
 import com.activity.common.JsonData;
 import com.activity.gateway.AbstractHandle;
 import com.activity.gateway.annotation.GatewayMapping;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,9 +44,11 @@ public class GatewayController {
                 return json;
             }
             handle.request = request;
+            //参数解密
+            requestJson = AesUtil.aesDecrypt(requestJson, AesUtil.AES_KEY);
             //方法为空,默认为handle方法
             if (StringUtils.isEmpty(methodName)) {
-                return handle.handle(requestJson);
+                return handle.handle(JSON.parseObject(requestJson, Map.class));
             }
             //获取bean自定义方法
             Method[] methods = handle.getClass().getDeclaredMethods();
@@ -60,7 +64,7 @@ public class GatewayController {
                         if (paramTypeList.length == 0) {
                             return (JsonData) method.invoke(handle);
                         } else if (paramTypeList.length == 1) {
-                            return (JsonData) method.invoke(handle, requestJson);
+                            return (JsonData) method.invoke(handle, JSON.parseObject(requestJson, Map.class));
                         } else {
                             //参数大于1,暂定为请求非法 TODO
                             return new JsonData(ErrorEnum.E410.getCode(), ErrorEnum.E410.getDesc(), null);
