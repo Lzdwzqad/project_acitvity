@@ -59,7 +59,8 @@ public class GatewayController {
                     //获取注解对象
                     GatewayMapping getwayMapping = method.getAnnotation(GatewayMapping.class);
                     //校验映射名是否与请求方法名一致
-                    if (getwayMapping.value().equals(methodName) || method.getName().equals(methodName)) {
+                    if ((StringUtils.isEmpty(getwayMapping.value()) && method.getName().equals(methodName))
+                            || getwayMapping.value().equals(methodName)) {
                         //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
                         Type[] paramTypeList = method.getGenericParameterTypes();
                         if (paramTypeList.length == 0) {
