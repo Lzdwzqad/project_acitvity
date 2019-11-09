@@ -37,7 +37,7 @@ public class GatewayController {
      */
     @PostMapping("/gateway")
     public JsonData gateway(HttpServletRequest request, String beanName, String methodName, String requestJson) {
-        JsonData json = new JsonData(ErrorEnum.E404.getCode(), ErrorEnum.E404.getDesc(), null);
+        JsonData json = new JsonData(ErrorEnum.E404.getCode(), ErrorEnum.E404.getDesc());
         try {
             //根据参数获取容器中handle实现Bean
             AbstractHandle handle = abstractHandleMap.get(beanName);
@@ -68,16 +68,16 @@ public class GatewayController {
                             return (JsonData) method.invoke(handle, JSON.parseObject(requestJson, Map.class));
                         } else {
                             //参数大于1,暂定为请求非法 TODO
-                            return new JsonData(ErrorEnum.E410.getCode(), ErrorEnum.E410.getDesc(), null);
+                            return new JsonData(ErrorEnum.E410.getCode(), ErrorEnum.E410.getDesc());
                         }
                     }
                 }
             }
         } catch (BusinessException e) {
-            json = new JsonData(e.getCode(), e.getMessage(), null);
+            json = new JsonData(e.getCode(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            json = new JsonData(ErrorEnum.E500.getCode(), ErrorEnum.E500.getDesc(), null);
+            json = new JsonData(ErrorEnum.E500.getCode(), ErrorEnum.E500.getDesc());
         }
         return json;
     }

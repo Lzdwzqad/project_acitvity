@@ -49,4 +49,15 @@ public class JsonData {
         this.msg = msg;
         this.data = object;
     }
+
+    /**
+     * 自定义响应
+     *
+     * @param code
+     * @param msg
+     */
+    public JsonData(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 }
