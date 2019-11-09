@@ -32,7 +32,7 @@ public interface TaskService {
      * @param task
      * @return
      */
-    QuartzScheduleTask addTask(QuartzScheduleTask task);
+    QuartzScheduleTask addTask(QuartzScheduleTask task) throws Exception;
 
     /**
      * 重启定时任务

@@ -1,15 +1,15 @@
 package com.activity.handle;
 
-import com.activity.common.ArrayUtil;
-import com.activity.common.ConvertorUtil;
-import com.activity.common.ErrorEnum;
-import com.activity.common.JsonData;
+import com.activity.common.*;
 import com.activity.gateway.AbstractHandle;
 import com.activity.gateway.annotation.GatewayMapping;
 import com.activity.model.ScheduleTask;
+import com.activity.quartz.bean.QuartzScheduleTask;
+import com.activity.quartz.service.TaskService;
 import com.activity.service.ScheduleTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,9 @@ public class ScheduleTaskHandle extends AbstractHandle {
 
     @Autowired
     private ScheduleTaskService scheduleTaskService;
+
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public JsonData handle(Map<String, Object> map) {
@@ -43,16 +46,23 @@ public class ScheduleTaskHandle extends AbstractHandle {
     }
 
     @GatewayMapping
+    @Transactional
     public JsonData add(Map<String, Object> map) throws Exception {
-        ScheduleTask scheduleTask = ConvertorUtil.mapToObject(map, ScheduleTask.class);
-        JsonData jsonData;
-        int i = this.scheduleTaskService.insertSelective(scheduleTask);
-        if (i > 0) {
-            jsonData = new JsonData(ErrorEnum.S200.getCode(), ErrorEnum.S200.getDesc(), i);
-        } else {
-            jsonData = new JsonData(ErrorEnum.E500.getCode(), ErrorEnum.E501.getDesc(), i);
+        try {
+            ScheduleTask scheduleTask = ConvertorUtil.mapToObject(map, ScheduleTask.class);
+            QuartzScheduleTask quartzScheduleTask = ConvertorUtil.convertBean(scheduleTask,QuartzScheduleTask.class);
+            quartzScheduleTask = taskService.addTask(quartzScheduleTask);
+            scheduleTask = ConvertorUtil.convertBean(quartzScheduleTask,ScheduleTask.class);
+            int i = this.scheduleTaskService.insertSelective(scheduleTask);
+            if (i > 0) {
+                return new JsonData(null);
+            } else {
+                return new JsonData(ErrorEnum.E501.getCode(),ErrorEnum.E501.getDesc());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(ErrorEnum.E500);
         }
-        return jsonData;
     }
 
     @GatewayMapping

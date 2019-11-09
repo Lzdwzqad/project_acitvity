@@ -1,5 +1,7 @@
 package com.activity.quartz.manager;
 
+import com.activity.common.BusinessException;
+import com.activity.common.ErrorEnum;
 import com.activity.quartz.bean.QuartzScheduleTask;
 import com.activity.quartz.service.TaskService;
 import com.activity.quartz.util.SnowflakeIdWorker;
@@ -44,7 +46,12 @@ public class ManagerJob implements ApplicationListener<ContextRefreshedEvent> {
                     scheduleTask.setExpression(annotation.cron());
                     scheduleTask.setParam(new Object[]{});
                     scheduleTask.setName(class1.getSimpleName() + method.getName());
-                    taskService.addTask(scheduleTask);
+                    try {
+                        taskService.addTask(scheduleTask);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new BusinessException(ErrorEnum.E500);
+                    }
                 }
             }
         }

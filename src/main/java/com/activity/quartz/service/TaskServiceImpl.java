@@ -66,39 +66,34 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public QuartzScheduleTask addTask(QuartzScheduleTask task) {
-        try {
-            Scheduler scheduler = schedulerFactoryBean.getScheduler();
-            JobDetail jobDetail = JobBuilder.newJob(JobProxy.class)
-                    .withIdentity(task.getName(), task.getGroup()).build();
-            Trigger trigger = TriggerBuilder
-                    .newTrigger()
-                    .withIdentity(task.getTrigger(), task.getGroup())
-                    .startNow()
-                    .withSchedule(
-                            CronScheduleBuilder.cronSchedule(task
-                                    .getExpression())).build();
-            System.out.println(trigger.getKey());
-            Class<?> classzz = Class.forName(task.getGroup());
-            Class<?>[] c = new Class<?>[task.getParam().length];
-            for (int i = 0; i < task.getParam().length; i++) {
-                c[i] = task.getParam()[i].getClass();
-            }
-            Method method = classzz.getMethod(task.getTrigger(), c);
-            JobDataMap jobDataMap = trigger.getJobDataMap();
-            jobDataMap.put(JobProxy.JOB_NAME, task.getName());
-            jobDataMap.put(JobProxy.JOB_GROUP, classzz);
-            jobDataMap.put(JobProxy.JOB_TRIGGER, method);
-            jobDataMap.put(JobProxy.JOB_TRIGGER_PARAM, task.getParam());
-            scheduler.scheduleJob(jobDetail, trigger);
-            if (scheduler.isStarted()) {
-                scheduler.start();
-            }
-            if (!allTask.containsKey(task.getId())) {
-                allTask.put(task.getId(), task);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public QuartzScheduleTask addTask(QuartzScheduleTask task) throws Exception{
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        JobDetail jobDetail = JobBuilder.newJob(JobProxy.class)
+                .withIdentity(task.getName(), task.getGroup()).build();
+        Trigger trigger = TriggerBuilder
+                .newTrigger()
+                .withIdentity(task.getTrigger(), task.getGroup())
+                .startNow()
+                .withSchedule(
+                        CronScheduleBuilder.cronSchedule(task
+                                .getExpression())).build();
+        Class<?> classzz = Class.forName(task.getGroup());
+        Class<?>[] c = new Class<?>[task.getParam().length];
+        for (int i = 0; i < task.getParam().length; i++) {
+            c[i] = task.getParam()[i].getClass();
+        }
+        Method method = classzz.getMethod(task.getTrigger(), c);
+        JobDataMap jobDataMap = trigger.getJobDataMap();
+        jobDataMap.put(JobProxy.JOB_NAME, task.getName());
+        jobDataMap.put(JobProxy.JOB_GROUP, classzz);
+        jobDataMap.put(JobProxy.JOB_TRIGGER, method);
+        jobDataMap.put(JobProxy.JOB_TRIGGER_PARAM, task.getParam());
+        scheduler.scheduleJob(jobDetail, trigger);
+        if (scheduler.isStarted()) {
+            scheduler.start();
+        }
+        if (!allTask.containsKey(task.getId())) {
+            allTask.put(task.getId(), task);
         }
         return task;
     }

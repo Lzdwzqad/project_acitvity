@@ -28,7 +28,7 @@ public class DemoTest {
     private ScheduleTaskService scheduleTaskService;
 
     @Test
-    public void addTask() throws InterruptedException {
+    public void addTask() throws Exception {
         QuartzScheduleTask task = new QuartzScheduleTask();
         task.setExpression("0/5 * * * * ?");
         task.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));

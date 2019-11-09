@@ -120,7 +120,7 @@ public class AesUtil {
      * 首先获取服务端的私钥:将客户端的公钥加密后获得的结果
      * 通过服务端的私钥和客户端传递的加密字符串即可实现解密
      */
-    public static void main(String[] args) throws Exception {
+    public void teset() {
         String content = "456";
         System.out.println("加密前：" + content);
         System.out.println("加密密钥和解密密钥：" + AES_KEY);
