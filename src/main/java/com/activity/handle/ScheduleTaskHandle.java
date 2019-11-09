@@ -30,7 +30,7 @@ public class ScheduleTaskHandle extends AbstractHandle {
         return new JsonData(map);
     }
 
-    @GatewayMapping(name = "list")
+    @GatewayMapping
     public JsonData list() {
         JsonData jsonData;
         List<ScheduleTask> list = this.scheduleTaskService.list();
@@ -42,7 +42,7 @@ public class ScheduleTaskHandle extends AbstractHandle {
         return jsonData;
     }
 
-    @GatewayMapping(name = "add")
+    @GatewayMapping
     public JsonData add(Map<String, Object> map) throws Exception {
         ScheduleTask scheduleTask = ConvertorUtil.mapToObject(map, ScheduleTask.class);
         JsonData jsonData;
@@ -55,7 +55,7 @@ public class ScheduleTaskHandle extends AbstractHandle {
         return jsonData;
     }
 
-    @GatewayMapping(name = "del")
+    @GatewayMapping
     public JsonData del(Map<String, Object> map) {
         JsonData jsonData;
         int i = this.scheduleTaskService.deleteByPrimaryKey(map.get("id").toString());
@@ -68,7 +68,7 @@ public class ScheduleTaskHandle extends AbstractHandle {
     }
 
 
-    @GatewayMapping(name = "update")
+    @GatewayMapping
     public JsonData update(Map<String, Object> map) throws Exception {
         ScheduleTask scheduleTask = ConvertorUtil.mapToObject(map, ScheduleTask.class);
         JsonData jsonData;
@@ -80,6 +80,5 @@ public class ScheduleTaskHandle extends AbstractHandle {
         }
         return jsonData;
     }
-
 
 }

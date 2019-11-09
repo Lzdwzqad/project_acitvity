@@ -18,5 +18,5 @@ public @interface GatewayMapping {
      *
      * @return
      */
-    String name();
+    String value() default "";
 }

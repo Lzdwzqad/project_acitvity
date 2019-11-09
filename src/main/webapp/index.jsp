@@ -11,6 +11,7 @@
                 type: "POST",
                 dataType: "json",
                 url: "gateway",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 data: {
                     "beanName": $("#beanName").val(),
                     "methodName": $("#methodName").val(),

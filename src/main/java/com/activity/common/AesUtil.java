@@ -8,6 +8,9 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * AES加解密工具
+ */
 public class AesUtil {
 
     /**
@@ -55,7 +58,6 @@ public class AesUtil {
         kgen.init(128);
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), "AES"));
-
         return cipher.doFinal(content.getBytes("utf-8"));
     }
 
@@ -91,7 +93,7 @@ public class AesUtil {
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
         cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), "AES"));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
-        return new String(decryptBytes);
+        return new String(decryptBytes, "UTF-8");
     }
 
 
@@ -124,9 +126,7 @@ public class AesUtil {
         System.out.println("加密密钥和解密密钥：" + AES_KEY);
         String encrypt = aesEncrypt(content, AES_KEY);
         System.out.println("加密后：" + encrypt);
-        String decrypt = aesDecrypt(encrypt, AES_KEY);
+        String decrypt = aesDecrypt("SQakXYz8jkq/zvnk6qnhZQ==", AES_KEY);
         System.out.println("解密后：" + decrypt);
-        String jsData = aesDecrypt("1SYhQ2/eIQCfuHYu27APfg==", AES_KEY);
-        System.out.println("前端数据解密后的值:" + jsData);
     }
 }

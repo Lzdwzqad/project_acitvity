@@ -1,6 +1,7 @@
 package com.activity.gateway.controller;
 
 import com.activity.common.AesUtil;
+import com.activity.common.BusinessException;
 import com.activity.common.ErrorEnum;
 import com.activity.common.JsonData;
 import com.activity.gateway.AbstractHandle;
@@ -58,7 +59,7 @@ public class GatewayController {
                     //获取注解对象
                     GatewayMapping getwayMapping = method.getAnnotation(GatewayMapping.class);
                     //校验映射名是否与请求方法名一致
-                    if (getwayMapping.name().equals(methodName)) {
+                    if (getwayMapping.value().equals(methodName) || method.getName().equals(methodName)) {
                         //获得方法参数列表,目前只采用无参数和一个参数得方法,进行反射传参返回响应结果
                         Type[] paramTypeList = method.getGenericParameterTypes();
                         if (paramTypeList.length == 0) {
@@ -72,6 +73,8 @@ public class GatewayController {
                     }
                 }
             }
+        } catch (BusinessException e) {
+            json = new JsonData(e.getCode(), e.getMessage(), null);
         } catch (Exception e) {
             e.printStackTrace();
             json = new JsonData(ErrorEnum.E500.getCode(), ErrorEnum.E500.getDesc(), null);
