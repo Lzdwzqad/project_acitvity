@@ -42,7 +42,7 @@
     <redis.version>2.9.0</redis.version>
     <redis.spring.version>1.7.2.RELEASE</redis.spring.version>
     <!-- jackson -->
-    <jackson.version>2.9.3</jackson.version>
+    <jackson.version>2.11.1</jackson.version>
     <!-- quartz -->
     <quartz.varsion>2.3.2</quartz.varsion>
 
